@@ -1,8 +1,9 @@
 {
-  "name": "my-app",
+  "name": "mediakayttajakokemus",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "Jonsson-123",
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
