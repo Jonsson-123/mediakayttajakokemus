@@ -6,7 +6,7 @@
   "author": "Jonsson-123",
   "scripts": {
     "dev": "vite --open",
-    "build": "vite build",
+    "build": "vite build --base=./",
     "preview": "vite preview"
   },
   "dependencies": {
