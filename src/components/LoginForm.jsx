@@ -1,15 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
+import {useAuthentication} from '../hooks/apiHooks';
 
 const LoginForm = (props) => {
+  const {postLogin} = useAuthentication();
+
   const initValues = {
     username: '',
     password: '',
   };
 
-  const doLogin = () => {
-    console.log('submitted', inputs);
+  const doLogin = async () => {
+    try {
+      const loginResult = postLogin(inputs);
+      alert(loginResult.message);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const {inputs, handleSubmit, handleInputChange} = useForm(
