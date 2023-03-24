@@ -13,7 +13,7 @@ const LoginForm = (props) => {
 
   const doLogin = async () => {
     try {
-      const loginResult = postLogin(inputs);
+      const loginResult = await postLogin(inputs);
       alert(loginResult.message);
     } catch (error) {
       alert(error.message);
