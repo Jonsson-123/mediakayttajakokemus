@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
+import {useUser} from '../hooks/apiHooks';
 
 const RegisterForm = (props) => {
+  const {postUser} = useUser();
+
   const initValues = {
     username: '',
     password: '',
@@ -10,12 +13,13 @@ const RegisterForm = (props) => {
     full_name: '',
   };
 
-  const doLogin = () => {
+  const doRegister = () => {
     console.log('submitted', inputs);
+    postUser(inputs);
   };
 
   const {inputs, handleSubmit, handleInputChange} = useForm(
-    doLogin,
+    doRegister,
     initValues
   );
 
