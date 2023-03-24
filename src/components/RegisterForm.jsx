@@ -4,7 +4,7 @@ import useForm from '../hooks/FormHooks';
 import {useUser} from '../hooks/apiHooks';
 
 const RegisterForm = (props) => {
-  const {postUser} = useUser();
+  const {postUser, getCheckUser} = useUser();
 
   const initValues = {
     username: '',
@@ -21,7 +21,14 @@ const RegisterForm = (props) => {
       alert(error.message);
     }
   };
-
+  const handleUsername = async () => {
+    try {
+      const {available} = await getCheckUser(inputs.username);
+      available || alert('Username unavailable');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   const {inputs, handleSubmit, handleInputChange} = useForm(
     doRegister,
     initValues
@@ -35,6 +42,7 @@ const RegisterForm = (props) => {
           placeholder="Username"
           onChange={handleInputChange}
           value={inputs.username}
+          onBlur={handleUsername}
         />
         <input
           name="password"
