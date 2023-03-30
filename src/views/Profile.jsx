@@ -1,19 +1,9 @@
-import {useEffect, useState} from 'react';
-import {useUser} from '../hooks/apiHooks';
+import {useContext} from 'react';
+import {MediaContext} from '../contexts/MediaContext';
 
 const Profile = () => {
-  const [user, setUser] = useState({});
-  const {getUserByToken} = useUser();
+  const [user] = useContext(MediaContext);
 
-  const getUserInfo = async () => {
-    const userToken = localStorage.getItem('userToken');
-    const user = await getUserByToken(userToken);
-    setUser(user);
-  };
-
-  useEffect(() => {
-    getUserInfo();
-  }, []); // jos taulukko tyhjä, ajetaan vain kerran
   return (
     <>
       <h1>Profile</h1>
