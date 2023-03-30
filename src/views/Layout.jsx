@@ -4,7 +4,7 @@ import {MediaContext} from '../contexts/MediaContext';
 import {useUser} from '../hooks/apiHooks';
 
 const Layout = () => {
-  const [user, setUser] = useContext(MediaContext);
+  const {setUser} = useContext(MediaContext);
   const navigate = useNavigate();
   const {getUserByToken} = useUser();
   const location = useLocation();

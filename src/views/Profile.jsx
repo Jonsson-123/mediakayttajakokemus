@@ -2,8 +2,7 @@ import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
 const Profile = () => {
-  const [user] = useContext(MediaContext);
-  console.log('profile', user);
+  const {user} = useContext(MediaContext);
 
   return (
     <>
