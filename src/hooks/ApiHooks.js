@@ -81,5 +81,27 @@ const useAuthentication = () => {
   };
   return {postLogin};
 };
+const useTags = () => {
+  const getTag = async (tag) => {
+    const tagResult = await doFetch(baseUrl + 'tags/' + tag);
+    if (!tagResult.length > 0) {
+      throw new Error('Tag not found');
+    }
+    return tagResult;
+  };
+  const postTag = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await doFetch(baseUrl + 'tags', fetchOptions);
+  };
 
-export {useMedia, useUser, useAuthentication};
+  return {getTag, postTag};
+};
+
+export {useMedia, useUser, useAuthentication, useTags};
