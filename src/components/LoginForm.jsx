@@ -5,6 +5,9 @@ import {useAuthentication} from '../hooks/apiHooks';
 import {useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
 import {Button, TextField} from '@mui/material';
+import {loginValidators} from '../utils/validators';
+import {loginForm} from '../utils/errorMessages';
+import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
 
 const LoginForm = (props) => {
   const {setUser} = useContext(MediaContext);
@@ -34,16 +37,18 @@ const LoginForm = (props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <TextField
+      <ValidatorForm onSubmit={handleSubmit} noValidate>
+        <TextValidator
           fullWidth
           margin="dense"
           name="username"
           placeholder="Username"
           onChange={handleInputChange}
           value={inputs.username}
+          validators={loginValidators.username}
+          errorMessages={loginForm.username}
         />
-        <TextField
+        <TextValidator
           fullWidth
           margin="dense"
           name="password"
@@ -51,12 +56,14 @@ const LoginForm = (props) => {
           placeholder="Password"
           onChange={handleInputChange}
           value={inputs.password}
+          validators={loginValidators.password}
+          errorMessages={loginForm.password}
         />
         <Button fullWidth sx={{mt: 1}} type="submit" variant="contained">
           {' '}
           Login
         </Button>
-      </form>
+      </ValidatorForm>
     </>
   );
 };

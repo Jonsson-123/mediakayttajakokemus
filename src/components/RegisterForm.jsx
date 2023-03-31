@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
 import {useUser} from '../hooks/apiHooks';
 import {Button, TextField} from '@mui/material';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {registerForm} from '../utils/errorMessages';
+import {registerValidators} from '../utils/validators';
 
 const RegisterForm = (props) => {
   const {postUser, getCheckUser} = useUser();
@@ -37,8 +40,8 @@ const RegisterForm = (props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <TextField
+      <ValidatorForm onSubmit={handleSubmit} noValidate>
+        <TextValidator
           fullWidth
           margin="dense"
           name="username"
@@ -46,8 +49,10 @@ const RegisterForm = (props) => {
           onChange={handleInputChange}
           value={inputs.username}
           onBlur={handleUsername}
+          validators={registerValidators.username}
+          errorMessages={registerForm.username}
         />
-        <TextField
+        <TextValidator
           fullWidth
           margin="dense"
           name="password"
@@ -55,8 +60,10 @@ const RegisterForm = (props) => {
           placeholder="Password"
           onChange={handleInputChange}
           value={inputs.password}
+          validators={registerValidators.password}
+          errorMessages={registerForm.password}
         />
-        <TextField
+        <TextValidator
           fullWidth
           margin="dense"
           name="email"
@@ -64,8 +71,10 @@ const RegisterForm = (props) => {
           placeholder="Email"
           onChange={handleInputChange}
           value={inputs.email}
+          validators={registerValidators.email}
+          errorMessages={registerForm.email}
         />
-        <TextField
+        <TextValidator
           fullWidth
           margin="dense"
           name="full_name"
@@ -77,7 +86,7 @@ const RegisterForm = (props) => {
           {' '}
           Register
         </Button>
-      </form>
+      </ValidatorForm>
     </>
   );
 };
