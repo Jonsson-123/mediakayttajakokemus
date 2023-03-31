@@ -1,13 +1,13 @@
 const registerValidators = {
   username: ['required', 'minStringLength:3'],
-  password: ['required', 'minStringLength:8'],
-  confirm: ['required'],
+  password: ['required', 'minStringLength:5'],
+  confirm: [],
   email: ['required', 'isEmail'],
-  full_name: [],
+  full_name: ['minStringLength: 2'],
 };
 
 const loginValidators = {
-  username: ['required', 'minStringLength:3'],
-  password: ['required', 'minStringLength:8'],
+  username: ['required'],
+  password: ['required'],
 };
 export {registerValidators, loginValidators};
