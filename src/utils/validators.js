@@ -3,7 +3,7 @@ const registerValidators = {
   password: ['required', 'minStringLength:5'],
   confirm: [],
   email: ['required', 'isEmail'],
-  full_name: ['minStringLength: 2'],
+  full_name: ['matchRegexp:^(.{2,})?$'],
 };
 
 const loginValidators = {
