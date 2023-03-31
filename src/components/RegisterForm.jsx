@@ -81,6 +81,8 @@ const RegisterForm = (props) => {
           placeholder="Full name"
           onChange={handleInputChange}
           value={inputs.full_name}
+          validators={registerValidators.full_name}
+          errorMessages={registerForm.full_name}
         />
         <Button fullWidth sx={{mt: 1}} type="submit" variant="contained">
           {' '}
