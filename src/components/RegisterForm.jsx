@@ -1,42 +1,54 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../hooks/FormHooks';
 import {useUser} from '../hooks/apiHooks';
-import {Button, TextField} from '@mui/material';
+import {Button} from '@mui/material';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {registerForm} from '../utils/errorMessages';
 import {registerValidators} from '../utils/validators';
 
-const RegisterForm = (props) => {
+const RegisterForm = ({toggle}) => {
   const {postUser, getCheckUser} = useUser();
 
   const initValues = {
     username: '',
     password: '',
+    confirm: '',
     email: '',
     full_name: '',
   };
 
   const doRegister = async () => {
     try {
-      const userResult = postUser(inputs);
+      const withoutConfirm = {...inputs};
+      delete withoutConfirm.confirm;
+      const userResult = postUser(withoutConfirm);
       alert(userResult.message);
+      toggle();
     } catch (error) {
       alert(error.message);
     }
   };
-  const handleUsername = async () => {
-    try {
-      const {available} = await getCheckUser(inputs.username);
-      available || alert('Username unavailable');
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+
   const {inputs, handleSubmit, handleInputChange} = useForm(
     doRegister,
     initValues
   );
+
+  useEffect(() => {
+    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+      /*
+      if (value !== inputs.password) {
+        return false;
+      }
+      return true;
+      */
+      return value === inputs.password;
+    });
+    ValidatorForm.addValidationRule('isUsernameAvailable', async (value) => {
+      return await getCheckUser(inputs.username);
+    });
+  }, [inputs]); // Päivittää useeffectin kun inputs muuttuu
 
   return (
     <>
@@ -48,7 +60,6 @@ const RegisterForm = (props) => {
           placeholder="Username"
           onChange={handleInputChange}
           value={inputs.username}
-          onBlur={handleUsername}
           validators={registerValidators.username}
           errorMessages={registerForm.username}
         />
@@ -62,6 +73,17 @@ const RegisterForm = (props) => {
           value={inputs.password}
           validators={registerValidators.password}
           errorMessages={registerForm.password}
+        />
+        <TextValidator
+          fullWidth
+          margin="dense"
+          name="confirm"
+          type="password"
+          placeholder="Confirm Password"
+          onChange={handleInputChange}
+          value={inputs.confirm}
+          validators={registerValidators.confirm}
+          errorMessages={registerForm.confirm}
         />
         <TextValidator
           fullWidth
@@ -93,6 +115,8 @@ const RegisterForm = (props) => {
   );
 };
 
-RegisterForm.propTypes = {};
+RegisterForm.propTypes = {
+  toggle: PropTypes.func,
+};
 
 export default RegisterForm;
