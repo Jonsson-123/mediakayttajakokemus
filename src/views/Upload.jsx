@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Box, Button} from '@mui/material';
+import {Box, Button, Slider} from '@mui/material';
 import useForm from '../hooks/FormHooks';
 import {useMedia, useTags} from '../hooks/apiHooks';
 import {useNavigate} from 'react-router-dom';
@@ -81,6 +81,38 @@ const Upload = (props) => {
         />
         <Button type="submit">Upload</Button>
       </form>
+      <Slider
+        defaultValue={50}
+        name="brightness"
+        min={0}
+        max={100}
+        step={1}
+        valueLabelDisplay="auto"
+      />
+      <Slider
+        defaultValue={50}
+        name="contrast"
+        min={0}
+        max={100}
+        step={1}
+        valueLabelDisplay="auto"
+      />
+      <Slider
+        defaultValue={50}
+        name="saturation"
+        min={0}
+        max={100}
+        step={1}
+        valueLabelDisplay="auto"
+      />
+      <Slider
+        defaultValue={50}
+        name="sepia"
+        min={0}
+        max={100}
+        step={1}
+        valueLabelDisplay="auto"
+      />
     </Box>
   );
 };
