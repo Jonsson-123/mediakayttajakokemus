@@ -10,7 +10,7 @@ const useForm = (callback, initState) => {
     callback();
   };
   const handleInputChange = (event) => {
-    event.persist();
+    event.presist && event.persist();
     setInputs((inputs) => {
       return {
         ...inputs,
