@@ -11,7 +11,7 @@ const MediaRow = ({file}) => {
         src={
           file.media_type !== 'audio'
             ? mediaUrl + file.thumbnails?.w640
-            : '/vite.svg'
+            : 'vite.svg'
         }
         alt={file.title}
       />

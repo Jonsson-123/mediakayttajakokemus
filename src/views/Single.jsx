@@ -51,7 +51,7 @@ const Single = () => {
             saturate(${allData.filters.saturation}%)
             sepia(${allData.filters.sepia}%)
             `,
-            backgroundImage: file.media_type === 'audio' && `url(/vite.svg)`,
+            backgroundImage: file.media_type === 'audio' && `url(vite.svg)`,
           }}
         />
         <CardContent>
