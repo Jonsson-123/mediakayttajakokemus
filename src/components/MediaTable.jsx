@@ -4,8 +4,8 @@ import {useMedia} from '../hooks/apiHooks';
 import {useWindowSize} from '../hooks/WindowHooks';
 import MediaRow from './MediaRow';
 
-const MediaTable = () => {
-  const {mediaArray} = useMedia();
+const MediaTable = ({myFilesOnly = false}) => {
+  const {mediaArray} = useMedia(myFilesOnly);
   const windowSize = useWindowSize();
 
   return (
@@ -17,6 +17,8 @@ const MediaTable = () => {
   );
 };
 
-MediaTable.propTypes = {};
+MediaTable.propTypes = {
+  myFilesOnly: PropTypes.bool,
+};
 
 export default MediaTable;

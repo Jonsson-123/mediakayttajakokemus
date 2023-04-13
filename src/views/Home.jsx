@@ -7,7 +7,7 @@ const Home = () => {
       <Typography component="h1" variant="h2">
         Home
       </Typography>
-      <MediaTable />;
+      <MediaTable />
     </>
   );
 };
