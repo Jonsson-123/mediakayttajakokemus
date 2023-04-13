@@ -9,6 +9,7 @@ import {MediaProvider} from './contexts/MediaContext';
 import Logout from './views/Logout';
 import Upload from './views/Upload';
 import MyFiles from './views/MyFiles';
+import Update from './views/Update';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path="/upload" element={<Upload />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/myfiles" element={<MyFiles />} />
+            <Route path="/update" element={<Update />} />
           </Route>
         </Routes>
       </MediaProvider>
