@@ -1,8 +1,14 @@
 import {Card, CardContent, CardMedia, Typography} from '@mui/material';
 import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
+import {useState} from 'react';
+import {useEffect} from 'react';
+import {useUser} from '../hooks/apiHooks';
 
 const Single = () => {
+  const [owner, setOwner] = useState({username: ''});
+
+  const {getUser} = useUser();
   const {state} = useLocation();
   const file = state.file;
   let allData = {
@@ -30,6 +36,20 @@ const Single = () => {
       break;
   }
 
+  const fetchUser = async () => {
+    try {
+      const userToken = localStorage.getItem('userToken');
+      const ownerInfo = await getUser(file.user_id, userToken);
+      setOwner(ownerInfo);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []); // jos taulukko tyhjä, ajetaan vain kerran
+
   return (
     <>
       <Typography component="h1" variant="h3">
@@ -56,6 +76,7 @@ const Single = () => {
         />
         <CardContent>
           <Typography variant="body1">{allData.desc}</Typography>
+          <Typography variant="body2">By: {owner.username}</Typography>
         </CardContent>
       </Card>
     </>
