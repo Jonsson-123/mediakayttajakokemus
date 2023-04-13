@@ -6,7 +6,7 @@
   "author": "Jonsson-123",
   "scripts": {
     "dev": "vite --open",
-    "build": "vite build --base=/~joonalam/mpjakk/week3/validation/",
+    "build": "vite build --base=/~joonalam/mpjakk/week4/upload/",
     "preview": "vite preview"
   },
   "dependencies": {
