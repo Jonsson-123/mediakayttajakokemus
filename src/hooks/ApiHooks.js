@@ -156,4 +156,34 @@ const useTags = () => {
   return {getTag, postTag};
 };
 
-export {useMedia, useUser, useAuthentication, useTags};
+const useFavourite = () => {
+  const postFavourite = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await doFetch(baseUrl + 'favourites', fetchOptions);
+  };
+
+  const getFavourite = async (id) => {
+    return await doFetch(baseUrl + 'favourites/file/' + id);
+  };
+
+  const deleteFavourite = async (id, token) => {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await doFetch(baseUrl + 'favourites/file/' + id, options);
+  };
+
+  return {postFavourite, getFavourite, deleteFavourite};
+};
+
+export {useMedia, useUser, useAuthentication, useTags, useFavourite};
