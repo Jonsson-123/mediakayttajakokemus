@@ -80,6 +80,7 @@ const Single = () => {
       const data = {file_id: file.file_id};
       const likeInfo = await postFavourite(data, userToken);
       console.log(likeInfo);
+      setUserLike(true);
     } catch (error) {
       console.log(error.message);
     }
@@ -90,6 +91,7 @@ const Single = () => {
       const userToken = localStorage.getItem('userToken');
       const likeInfo = await deleteFavourite(file.file_id, userToken);
       console.log(likeInfo);
+      setUserLike(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -97,8 +99,11 @@ const Single = () => {
 
   useEffect(() => {
     fetchUser();
-    fetchLikes();
   }, []); // jos taulukko tyhjä, ajetaan vain kerran, kun sivu ladataan
+
+  useEffect(() => {
+    fetchLikes();
+  }, [userLike]); // Ajetaan useEffect, kun userLike arvo muuttuu
 
   return (
     <>
