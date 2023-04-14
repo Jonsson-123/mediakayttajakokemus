@@ -10,14 +10,15 @@ import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
 import {useState} from 'react';
 import {useEffect} from 'react';
-import {useUser} from '../hooks/apiHooks';
+import {useFavourite, useUser} from '../hooks/apiHooks';
 
 const Single = () => {
   const [owner, setOwner] = useState({username: ''});
-
   const {getUser} = useUser();
   const {state} = useLocation();
+  const {getFavourites} = useFavourite();
   const file = state.file;
+
   let allData = {
     desc: file.description,
     filters: {
@@ -32,6 +33,7 @@ const Single = () => {
   } catch (error) {
     /* Empty */
   }
+
   let componentType = 'img';
 
   switch (file.media_type) {
@@ -53,9 +55,19 @@ const Single = () => {
     }
   };
 
+  const fetchLikes = async () => {
+    try {
+      const likeInfo = await getFavourites(file.file_id);
+      console.log(likeInfo);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     fetchUser();
-  }, []); // jos taulukko tyhjä, ajetaan vain kerran
+    fetchLikes();
+  }, []); // jos taulukko tyhjä, ajetaan vain kerran, kun sivu ladataan
 
   return (
     <>
