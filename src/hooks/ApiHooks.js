@@ -17,7 +17,7 @@ const doFetch = async (url, options) => {
 
 const useMedia = (myFilesOnly = false) => {
   const [mediaArray, setMediaArray] = useState([]);
-  const {user} = useContext(MediaContext);
+  const {user, update} = useContext(MediaContext);
   const getMedia = async () => {
     try {
       let files = await useTags().getTag(appId);
@@ -45,7 +45,7 @@ const useMedia = (myFilesOnly = false) => {
     } catch (error) {
       console.log(error.message);
     }
-  }, []);
+  }, [update]); // Aina kun update muuttuu, ajaa useEffectin
 
   const postMedia = async (data, token) => {
     const options = {
