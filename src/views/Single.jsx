@@ -8,15 +8,21 @@ import {
 } from '@mui/material';
 import {useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {useEffect} from 'react';
 import {useFavourite, useUser} from '../hooks/apiHooks';
+import {MediaContext} from '../contexts/MediaContext';
 
 const Single = () => {
   const [owner, setOwner] = useState({username: ''});
+  const [likes, setLikes] = useState(0);
+  const [userLike, setUserLike] = useState(false);
+  const {user} = useContext(MediaContext);
+
   const {getUser} = useUser();
+  const {getFavourites, postFavourite, deleteFavourite} = useFavourite();
+
   const {state} = useLocation();
-  const {getFavourites} = useFavourite();
   const file = state.file;
 
   let allData = {
@@ -59,6 +65,31 @@ const Single = () => {
     try {
       const likeInfo = await getFavourites(file.file_id);
       console.log(likeInfo);
+      setLikes(likeInfo.length);
+      likeInfo.forEach((like) => {
+        like.user_id === user.user_id && setUserLike(true);
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const doLike = async () => {
+    try {
+      const userToken = localStorage.getItem('userToken');
+      const data = {file_id: file.file_id};
+      const likeInfo = await postFavourite(data, userToken);
+      console.log(likeInfo);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const deleteLike = async () => {
+    try {
+      const userToken = localStorage.getItem('userToken');
+      const likeInfo = await deleteFavourite(file.file_id, userToken);
+      console.log(likeInfo);
     } catch (error) {
       console.log(error.message);
     }
@@ -96,11 +127,15 @@ const Single = () => {
         <CardContent>
           <Typography variant="body1">{allData.desc}</Typography>
           <Typography variant="body2">By: {owner.username}</Typography>
-          <Typography variant="body2">Likes: 22</Typography>
+          <Typography variant="body2">Likes: {likes}</Typography>
 
           <ButtonGroup>
-            <Button>Like</Button>
-            <Button disabled={true}>Dislike</Button>
+            <Button onClick={doLike} disabled={userLike}>
+              Like
+            </Button>
+            <Button onClick={deleteLike} disabled={!userLike}>
+              Dislike
+            </Button>
           </ButtonGroup>
         </CardContent>
       </Card>
